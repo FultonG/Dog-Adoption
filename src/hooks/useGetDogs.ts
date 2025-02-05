@@ -3,7 +3,7 @@ import { fetchDogsByIds } from '../api/dogs';
 import { Dog } from '../api/dogs/types';
 
 // Custom hook to fetch dogs with caching
-export function useGetDogs(dogIds: string[]) {
+function useGetDogs(dogIds: string[]) {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,3 +48,5 @@ export function useGetDogs(dogIds: string[]) {
 
   return { dogs, loading, error };
 }
+
+export default useGetDogs;
