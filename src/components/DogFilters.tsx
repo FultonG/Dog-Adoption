@@ -95,7 +95,6 @@ const DogFilters: React.FC<DogFiltersProps> = ({
 
   const toggleSort = () => {
     let selectedSort = sort === 'breed:asc' ? 'breed:desc' : 'breed:asc';
-    console.log(selectedSort);
     onFilterChange({
       breeds: selectedBreeds,
       zipCodes: selectedZipCodes,
