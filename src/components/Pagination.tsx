@@ -1,12 +1,8 @@
 import React from 'react';
+import { PaginationState } from '../types/PaginationState';
 
 interface PaginationProps {
-  paginationState: {
-    prev: string | null;
-    next: string | null;
-    total: number;
-    size: number;
-  };
+  paginationState: PaginationState<string>;
   currentPage: number;
   fetchPrevPage: () => void;
   fetchNextPage: () => void;
@@ -26,7 +22,9 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className="flex justify-between items-center mt-6">
       <div className="text-sm text-gray-600">
-        <span>Page {currentPage} of {totalPages}</span>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
       </div>
 
       <div className="flex space-x-3">

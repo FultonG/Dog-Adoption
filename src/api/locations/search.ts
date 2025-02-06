@@ -1,12 +1,12 @@
 import client from '../client';
 
 interface Location {
-  zip_code: string
-  latitude: number
-  longitude: number
-  city: string
-  state: string
-  county: string
+  zip_code: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  state: string;
+  county: string;
 }
 
 interface LocationSearchResponse {
@@ -14,10 +14,11 @@ interface LocationSearchResponse {
   total: number;
 }
 
-const searchLocationsByState = async (states: string[]): Promise<LocationSearchResponse> => {
+const searchLocationsByState = async (
+  states: string[]
+): Promise<LocationSearchResponse> => {
   try {
-
-    const response = await client.post('/locations/search',{states});
+    const response = await client.post('/locations/search', { states });
 
     return response.data;
   } catch (error) {

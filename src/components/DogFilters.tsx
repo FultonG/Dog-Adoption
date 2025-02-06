@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SearchBox from './Searchbox';
 import { STATES_AND_TERRITORIES } from '../constants';
 import searchLocationsByState from '../api/locations/search';
+import Button from './Button';
 interface DogFiltersProps {
   breeds: string[];
   zipCodes: string[];
@@ -27,33 +28,61 @@ const DogFilters: React.FC<DogFiltersProps> = ({
 
   const handleBreedChange = (changedBreeds: string[]) => {
     setSelectedBreeds(changedBreeds);
-    onFilterChange({ breeds: changedBreeds, zipCodes: selectedZipCodes, ageMin, ageMax });
+    onFilterChange({
+      breeds: changedBreeds,
+      zipCodes: selectedZipCodes,
+      ageMin,
+      ageMax,
+    });
   };
 
   const handleStateAndTerritoriesChange = async (states: string[]) => {
-    const locations = await searchLocationsByState(states)
+    const locations = await searchLocationsByState(states);
     let changedZipCodes = locations.results.reduce((acc, curr) => {
       acc.push(curr.zip_code);
       return acc;
     }, [] as string[]);
     setSelectedZipCodes(changedZipCodes);
-    onFilterChange({ breeds: selectedBreeds, zipCodes: changedZipCodes, ageMin, ageMax });
+    onFilterChange({
+      breeds: selectedBreeds,
+      zipCodes: changedZipCodes,
+      ageMin,
+      ageMax,
+    });
   };
 
-  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>, label: string) => {
+  const handleNumberInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    label: string
+  ) => {
     const age = parseInt(e.target.value, 10);
     if (!isNaN(age) && age >= 0) {
       if (label === 'min') {
-        onFilterChange({ breeds: selectedBreeds, zipCodes: selectedZipCodes, ageMin: age, ageMax })
+        onFilterChange({
+          breeds: selectedBreeds,
+          zipCodes: selectedZipCodes,
+          ageMin: age,
+          ageMax,
+        });
       } else {
-        onFilterChange({ breeds: selectedBreeds, zipCodes: selectedZipCodes, ageMin, ageMax: age })
+        onFilterChange({
+          breeds: selectedBreeds,
+          zipCodes: selectedZipCodes,
+          ageMin,
+          ageMax: age,
+        });
       }
     }
-  }
+  };
 
   const handleClearAgeFilter = () => {
-    onFilterChange({ breeds: selectedBreeds, zipCodes: selectedZipCodes, ageMin: undefined, ageMax: undefined })
-  }
+    onFilterChange({
+      breeds: selectedBreeds,
+      zipCodes: selectedZipCodes,
+      ageMin: undefined,
+      ageMax: undefined,
+    });
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -75,7 +104,10 @@ const DogFilters: React.FC<DogFiltersProps> = ({
 
       <div className="mb-4 flex justify-between">
         <div className="w-1/2 pr-2">
-          <label htmlFor="ageMin" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="ageMin"
+            className="block text-gray-700 font-medium mb-2"
+          >
             Min Age
           </label>
           <input
@@ -89,7 +121,10 @@ const DogFilters: React.FC<DogFiltersProps> = ({
         </div>
 
         <div className="w-1/2 pl-2">
-          <label htmlFor="ageMax" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="ageMax"
+            className="block text-gray-700 font-medium mb-2"
+          >
             Max Age
           </label>
           <input
@@ -102,10 +137,9 @@ const DogFilters: React.FC<DogFiltersProps> = ({
           />
         </div>
       </div>
-      <button
-        onClick={handleClearAgeFilter}
-        className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
-      >Clear Filter</button>
+      <Button variant="outlined" onClick={handleClearAgeFilter}>
+        Clear Filter
+      </Button>
     </div>
   );
 };

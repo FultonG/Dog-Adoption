@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Spinner from './Spinner';
+import Button from './Button';
 
 interface SearchBoxProps {
   label: string;
@@ -15,9 +16,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   onSelectChange,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [localSelectedOptions, setLocalSelectedOptions] = useState<string[]>(
-    selectedOptions
-  );
+  const [localSelectedOptions, setLocalSelectedOptions] =
+    useState<string[]>(selectedOptions);
   const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
   const [loading, setLoading] = useState(false);
 
@@ -45,11 +45,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({
     }
   }, [searchTerm, debounceSearch, options]);
 
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -61,7 +59,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
       );
     }
   };
-
 
   const handleApplyChanges = () => {
     onSelectChange(localSelectedOptions);
@@ -86,7 +83,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
     if (!aSelected && bSelected) return 1;
     return 0;
   });
-
 
   return (
     <div className="mb-4">
@@ -129,26 +125,20 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                 onChange={handleCheckboxChange}
                 className="mr-2"
               />
-              <label htmlFor={option} className="text-gray-700">{option}</label>
+              <label htmlFor={option} className="text-gray-700">
+                {option}
+              </label>
             </div>
           ))}
         </div>
       )}
 
       <div className="mt-4 flex justify-between">
-        <button
-          onClick={handleClearFilter}
-          className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600"
-        >
+        <Button onClick={handleClearFilter} variant="outlined">
           Clear Filter
-        </button>
+        </Button>
 
-        <button
-          onClick={handleApplyChanges}
-          className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Apply
-        </button>
+        <Button onClick={handleApplyChanges}>Apply</Button>
       </div>
     </div>
   );
