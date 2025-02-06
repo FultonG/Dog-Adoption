@@ -64,8 +64,6 @@ const DogSearchPage: React.FC = () => {
     setParams({ ...filters, size });
   };
 
- 
-
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">

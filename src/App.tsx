@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import DogSearchPage from './pages/DogSearch';
 import Match from './pages/Match';
 import { FavoritesProvider } from './context/favorites';
-
 const App: React.FC = () => {
   return (
     <BrowserRouter>
