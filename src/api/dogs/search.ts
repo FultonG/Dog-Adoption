@@ -1,9 +1,14 @@
 import client from '../client';
 import { DogSearchResponse } from './types';
 
-const searchDogs = async ({ url, ...params }: any): Promise<DogSearchResponse> => {
+const searchDogs = async ({
+  url,
+  ...params
+}: any): Promise<DogSearchResponse> => {
   try {
-    const request = url? client.get(url) : client.get('/dogs/search', { params });
+    const request = url
+      ? client.get(url)
+      : client.get('/dogs/search', { params });
 
     const response = await request;
 

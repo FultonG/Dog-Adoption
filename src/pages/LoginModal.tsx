@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {login} from '../api/auth/login';
+import { login } from '../api/auth/login';
 import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router';
 
@@ -14,8 +14,8 @@ const LoginModal = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    try{
-      const response = await login({email, name: userName})
+    try {
+      const response = await login({ email, name: userName });
       if (response) {
         navigate('/');
       } else {
@@ -24,7 +24,10 @@ const LoginModal = () => {
     } catch (error: any) {
       // Catch the error and handle it
       if (error.response) {
-        setError(error.response.data.message || 'Something went wrong. Please try again.');
+        setError(
+          error.response.data.message ||
+            'Something went wrong. Please try again.'
+        );
       } else if (error.request) {
         setError('Network error. Please check your internet connection.');
       } else {
@@ -41,7 +44,12 @@ const LoginModal = () => {
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email Address</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Email Address
+            </label>
             <input
               type="email"
               id="email"
@@ -52,7 +60,12 @@ const LoginModal = () => {
             />
           </div>
           <div>
-            <label htmlFor="userName" className="block text-sm font-medium text-gray-600">Name</label>
+            <label
+              htmlFor="userName"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Name
+            </label>
             <input
               type="userName"
               id="userName"
@@ -62,7 +75,7 @@ const LoginModal = () => {
               placeholder="Enter your name"
             />
           </div>
-        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
           <div className="flex justify-between items-center">
             <button
               type="submit"

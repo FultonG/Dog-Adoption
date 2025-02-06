@@ -16,11 +16,11 @@ function useGetDogs(dogIds: string[]) {
       setError(null);
 
       // Find the dog IDs that are not in cache
-      const idsToFetch = dogIds.filter(id => !dogCache.current.has(id));
+      const idsToFetch = dogIds.filter((id) => !dogCache.current.has(id));
 
       if (idsToFetch.length === 0) {
         // If all dogs are in the cache, no need to make API calls
-        setDogs(dogIds.map(id => dogCache.current.get(id)!));
+        setDogs(dogIds.map((id) => dogCache.current.get(id)!));
         setLoading(false);
         return;
       }
@@ -30,10 +30,10 @@ function useGetDogs(dogIds: string[]) {
         const fetchedDogs = await fetchDogsByIds(idsToFetch);
 
         // Update the cache with the fetched dogs
-        fetchedDogs.forEach(dog => dogCache.current.set(dog.id, dog));
+        fetchedDogs.forEach((dog) => dogCache.current.set(dog.id, dog));
 
         // Update the state with the complete dog list
-        const allDogs = dogIds.map(id => dogCache.current.get(id)!);
+        const allDogs = dogIds.map((id) => dogCache.current.get(id)!);
         setDogs(allDogs);
       } catch (error) {
         setError('Failed to fetch dogs');

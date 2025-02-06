@@ -6,7 +6,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,  // Make sure cookies are sent in cross-origin requests
+  withCredentials: true, // Make sure cookies are sent in cross-origin requests
 });
 
 // Response Interceptor: Handle 401 Unauthorized errors (for expired session or invalid cookies)
