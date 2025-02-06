@@ -2,25 +2,29 @@ import React, { useState } from 'react';
 import SearchBox from './Searchbox';
 import { STATES_AND_TERRITORIES } from '../constants';
 import searchLocationsByState from '../api/locations/search';
+import { TiArrowSortedDown } from 'react-icons/ti';
+import { TiArrowSortedUp } from 'react-icons/ti';
 import Button from './Button';
 interface DogFiltersProps {
   breeds: string[];
   zipCodes: string[];
   ageMin: number | undefined;
   ageMax: number | undefined;
+  sort: string;
   onFilterChange: (filters: {
     breeds: string[];
     zipCodes: string[];
     ageMin: number | undefined;
     ageMax: number | undefined;
+    sort: string;
   }) => void;
 }
 
 const DogFilters: React.FC<DogFiltersProps> = ({
   breeds,
-  zipCodes,
   ageMin,
   ageMax,
+  sort,
   onFilterChange,
 }) => {
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
@@ -33,6 +37,7 @@ const DogFilters: React.FC<DogFiltersProps> = ({
       zipCodes: selectedZipCodes,
       ageMin,
       ageMax,
+      sort,
     });
   };
 
@@ -48,6 +53,7 @@ const DogFilters: React.FC<DogFiltersProps> = ({
       zipCodes: changedZipCodes,
       ageMin,
       ageMax,
+      sort,
     });
   };
 
@@ -63,6 +69,7 @@ const DogFilters: React.FC<DogFiltersProps> = ({
           zipCodes: selectedZipCodes,
           ageMin: age,
           ageMax,
+          sort,
         });
       } else {
         onFilterChange({
@@ -70,6 +77,7 @@ const DogFilters: React.FC<DogFiltersProps> = ({
           zipCodes: selectedZipCodes,
           ageMin,
           ageMax: age,
+          sort,
         });
       }
     }
@@ -81,12 +89,40 @@ const DogFilters: React.FC<DogFiltersProps> = ({
       zipCodes: selectedZipCodes,
       ageMin: undefined,
       ageMax: undefined,
+      sort,
+    });
+  };
+
+  const toggleSort = () => {
+    let selectedSort = sort === 'breed:asc' ? 'breed:desc' : 'breed:asc';
+    console.log(selectedSort);
+    onFilterChange({
+      breeds: selectedBreeds,
+      zipCodes: selectedZipCodes,
+      ageMin: undefined,
+      ageMax: undefined,
+      sort: selectedSort,
     });
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-xl font-semibold mb-4">Filter Results</h2>
+      <div className="mb-4">
+        <Button onClick={toggleSort}>
+          {sort === 'breed:asc' ? (
+            <div className="flex items-center space-x-2">
+              <span>Sort: Ascending</span>
+              <TiArrowSortedUp />
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <span>Sort: Descending</span>
+              <TiArrowSortedDown />
+            </div>
+          )}
+        </Button>
+      </div>
 
       <SearchBox
         label="Breeds"

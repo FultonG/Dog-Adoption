@@ -13,9 +13,9 @@ const DogSearchPage: React.FC = () => {
   const [zipCodes, setZipCodes] = useState<string[]>([]);
   const [ageMin, setAgeMin] = useState<number | undefined>(undefined);
   const [ageMax, setAgeMax] = useState<number | undefined>(undefined);
-  const [size, setSize] = useState<number>(25);
   const [sort, setSort] = useState<string>('breed:asc');
   const [breedList, setBreedList] = useState<string[]>([]);
+  const size = 25;
 
   useEffect(() => {
     const fetchBreeds = async () => {
@@ -54,20 +54,23 @@ const DogSearchPage: React.FC = () => {
     zipCodes: string[];
     ageMin: number | undefined;
     ageMax: number | undefined;
+    sort: string;
   }) => {
     setBreeds(filters.breeds);
     setZipCodes(filters.zipCodes);
     setAgeMin(filters.ageMin);
     setAgeMax(filters.ageMax);
-    setParams({ ...filters, size, sort });
+    setSort(filters.sort);
+    setParams({ ...filters, size });
   };
+
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
         Search for Dogs
       </h1>
-      {loading && <div className="text-center text-gray-700">Loading...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="w-full lg:w-1/4">
@@ -76,6 +79,7 @@ const DogSearchPage: React.FC = () => {
             zipCodes={zipCodes}
             ageMin={ageMin}
             ageMax={ageMax}
+            sort={sort}
             onFilterChange={handleFilterChange}
           />
         </div>
