@@ -2,13 +2,33 @@ import React, { useState } from 'react';
 import { login } from '../api/auth/login';
 import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router';
+import Button from '../components/Button';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    validateForm(e.target.value, userName);
+  };
+
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserName(e.target.value);
+    validateForm(email, e.target.value);
+  };
+
+  const validateForm = (email: string, userName: string) => {
+    if (email && userName) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +74,7 @@ const LoginModal = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
@@ -67,22 +87,23 @@ const LoginModal = () => {
               Name
             </label>
             <input
-              type="userName"
+              type="text"
               id="userName"
               value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={handleUserNameChange}
               className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your name"
             />
           </div>
           {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
           <div className="flex justify-between items-center">
-            <button
+            <Button
+              disabled={disabled}
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full flex justify-center"
             >
               {loading ? <Spinner /> : 'Login'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
